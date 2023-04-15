@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 public class SaveLoad : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class SaveLoad : MonoBehaviour
             SaveToJson();
         if (Input.GetKeyDown(KeyCode.L))
             LoadFromJson();
+        if (Input.GetKeyDown(KeyCode.D))
+            Delete();
     }
     public void SaveToJson()
     {
@@ -27,19 +30,32 @@ public class SaveLoad : MonoBehaviour
         Debug.Log(filePath);
 
         // Insert the data in the file.
-        System.IO.File.WriteAllText(filePath, inventoryData);
+        File.WriteAllText(filePath, inventoryData);
         Debug.Log("Saved");
     }
     public void LoadFromJson()
     {
         string filePath = Application.persistentDataPath + "/InventoryData.json";
 
+        if(!File.Exists(Application.persistentDataPath + "/InventoryData.json"))
+        {
+            Debug.Log("Saving data not found");
+            return;
+        }
+
         // Open, read and save the fille in the filePath into the string variable.
-        string inventoryData = System.IO.File.ReadAllText(filePath);
+        string inventoryData = File.ReadAllText(filePath);
 
         // Convert string to Inventory type.
         inventory = JsonUtility.FromJson<Inventory>(inventoryData);
         Debug.Log("Loaded");
+    }
+    public void Delete()
+    {
+        if (File.Exists(Application.persistentDataPath + "/InventoryData.json"))
+            File.Delete(Application.persistentDataPath + "/InventoryData.json");
+        else
+            Debug.Log("Saving data not found");
     }
 }
 

@@ -1368,9 +1368,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory:
-    coins: 0
-    isFull: 0
-    items: []
+    coins: 10
+    isFull: 1
+    list: 0000000003000000
+    items:
+    - name: kldfd
+      description: sdfsdf
+    - name: dfffffff
+      description: aaaaaaaaaaaa
 --- !u!4 &1603617087
 Transform:
   m_ObjectHideFlags: 0
